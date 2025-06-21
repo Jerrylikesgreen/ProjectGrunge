@@ -1,7 +1,7 @@
 class_name MobManager extends Node2D
 
 @onready var mob_body: MobBody = %MobBody
-
+@export var mob_resource: MobResource
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mob_body.connect("mob_state_changed", _on_mob_state_changed)

@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cljuyn137pid2"]
+[gd_scene load_steps=6 format=3 uid="uid://cljuyn137pid2"]
 
 [ext_resource type="Script" uid="uid://cikxeycp81x0f" path="res://Scripts/Mobs/Enemy/enemy_controler.gd" id="1_2t2r4"]
 [ext_resource type="Script" uid="uid://duryjo1boushy" path="res://Scripts/Mobs/Enemy/enemy_manager.gd" id="1_dmwl5"]
+[ext_resource type="Resource" uid="uid://eq86sgev3uc" path="res://Resources/enemy_resource.tres" id="2_d40jh"]
 [ext_resource type="Script" uid="uid://cc2o2xph7i4bo" path="res://Scripts/Mobs/Enemy/enemy_state_machine.gd" id="2_dmwl5"]
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_d40jh"]
 
 [node name="EnemyManager" type="Node2D"]
 script = ExtResource("1_dmwl5")
+mob_resource = ExtResource("2_d40jh")
 
 [node name="EnemyControler" type="Node2D" parent="."]
 script = ExtResource("1_2t2r4")
