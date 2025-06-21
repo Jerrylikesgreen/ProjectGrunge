@@ -18,3 +18,5 @@ script = ExtResource("2_dmwl5")
 
 [node name="MobBody" parent="EnemyControler" instance=ExtResource("3_d40jh")]
 unique_name_in_owner = true
+
+[connection signal="mob_state_changed" from="EnemyControler/MobBody" to="." method="_on_mob_body_mob_state_changed"]

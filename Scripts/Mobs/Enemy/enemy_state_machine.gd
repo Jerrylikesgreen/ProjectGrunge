@@ -13,8 +13,3 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
-func _on_mob_body__on_mob_body_state_change(mob_body_state: MobBody.MobBodyState) -> void:
-	mob_state = mob_body_state
-	pass # Replace with function body.
