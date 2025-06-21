@@ -1,4 +1,4 @@
-class_name OnPlayerTargetState extends EnemyStateMachine
+class_name PlayerTargetState extends EnemyStateMachine
 
 
 # Called when the node enters the scene tree for the first time.
@@ -11,4 +11,4 @@ func _process(delta: float) -> void:
 	pass
 
 func _run_on_player_target_logic()->void:
-	on_player_target_state = 
+	on_player_target_state #Todo: Finish. 
