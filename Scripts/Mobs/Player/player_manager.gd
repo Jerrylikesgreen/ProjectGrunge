@@ -2,11 +2,16 @@ class_name PlayerManager extends MobManager
 
 
 
-# Called when the node enters the scene tree for the first time.
+var prior_states: Array[MobBody.MobBodyState] = []
+
 func _ready() -> void:
-	pass
+	mob_body.mob_state_changed.connect(_on_mob_body_state_changed)
+	mob_body.add_to_group("player")
 
+func _on_mob_body_state_changed(new_state: MobBody.MobBodyState) -> void:
+	prior_states.push_back(new_state)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	if prior_states.size() > 20:
+		prior_states.pop_front()
+
+	print("Player entered state: ", new_state, "  (history: ", prior_states, ")")

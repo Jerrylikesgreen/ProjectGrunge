@@ -16,7 +16,6 @@ const MOVE_EPS    := 0.5
 enum MobBodyState { IDLE, MOVING, ACTION, ATTACKING }
 
 @export var state : MobBodyState = MobBodyState.IDLE : set = _set_state
-
 var _dir     : float = 0.0   ## horizontal input  (-1.0 / +1.0)
 var _jump_req: bool  = false ## edge-trigger
 var _moving  : bool  = false
@@ -76,3 +75,12 @@ func _apply_state_animation(s: MobBodyState) -> void:
 		MobBodyState.MOVING: sprite.play("Walking")
 		#MobBodyState.ACTION: sprite.play("Jump")   ## or “Fall”		#todo: future work
 		#MobBodyState.ATTACKING: sprite.play("Attack")					#todo: future work
+
+
+func move_toward_point(target_pos: Vector2) -> void:
+	var dir_vec: Vector2 = target_pos - global_position
+	# Walk left/right toward the point
+	set_horizontal_input(signf(dir_vec.x))
+	#jump 
+	if dir_vec.y < -20.0 and is_on_floor():
+		request_jump()
