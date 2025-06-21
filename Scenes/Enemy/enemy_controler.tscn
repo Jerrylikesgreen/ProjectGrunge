@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cljuyn137pid2"]
+
+[ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="1_leg1k"]
+[ext_resource type="Script" uid="uid://cikxeycp81x0f" path="res://Scenes/Enemy/enemy_controler.gd" id="1_rr6e0"]
+[ext_resource type="Script" uid="uid://cc2o2xph7i4bo" path="res://Scenes/Enemy/enemy_state_machine.gd" id="2_2vmv1"]
+
+[node name="EnemyControler" type="Node2D"]
+script = ExtResource("1_rr6e0")
+
+[node name="EnemyStateMachine" type="Node" parent="."]
+script = ExtResource("2_2vmv1")
+
+[node name="MobBody" parent="." instance=ExtResource("1_leg1k")]
+unique_name_in_owner = true
+
+[connection signal="_on_Mob_Body_State_Change" from="MobBody" to="EnemyStateMachine" method="_on_mob_body__on_mob_body_state_change"]

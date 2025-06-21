@@ -1,4 +1,4 @@
-extends AnimatedSprite2D
+class_name MobSprite extends AnimatedSprite2D
 
 
 # Called when the node enters the scene tree for the first time.

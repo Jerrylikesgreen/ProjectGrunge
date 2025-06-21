@@ -6,6 +6,7 @@ class_name PlayerControler extends Node2D
 
 
 
+
 func _physics_process(_delta: float) -> void:
 	# Horizontal axis (–1, 0, +1)
 	var dir := Input.get_axis("Left", "Right")
