@@ -1,16 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://cljuyn137pid2"]
+[gd_scene load_steps=5 format=3 uid="uid://cljuyn137pid2"]
 
-[ext_resource type="Script" uid="uid://cikxeycp81x0f" path="res://Scenes/Enemy/enemy_controler.gd" id="1_2t2r4"]
-[ext_resource type="Script" uid="uid://cc2o2xph7i4bo" path="res://Scenes/Enemy/enemy_state_machine.gd" id="2_dmwl5"]
+[ext_resource type="Script" uid="uid://cikxeycp81x0f" path="res://Scripts/Mobs/Enemy/enemy_controler.gd" id="1_2t2r4"]
+[ext_resource type="Script" uid="uid://duryjo1boushy" path="res://Scripts/Mobs/Enemy/enemy_manager.gd" id="1_dmwl5"]
+[ext_resource type="Script" uid="uid://cc2o2xph7i4bo" path="res://Scripts/Mobs/Enemy/enemy_state_machine.gd" id="2_dmwl5"]
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_d40jh"]
 
-[node name="EnemyControler" type="Node2D"]
+[node name="EnemyManager" type="Node2D"]
+script = ExtResource("1_dmwl5")
+
+[node name="EnemyControler" type="Node2D" parent="."]
 script = ExtResource("1_2t2r4")
 
-[node name="EnemyStateMachine" type="Node" parent="."]
+[node name="EnemyStateMachine" type="Node" parent="EnemyControler"]
 script = ExtResource("2_dmwl5")
 
-[node name="MobBody" parent="." instance=ExtResource("3_d40jh")]
+[node name="MobBody" parent="EnemyControler" instance=ExtResource("3_d40jh")]
 unique_name_in_owner = true
 
-[connection signal="_on_Mob_Body_State_Change" from="MobBody" to="EnemyStateMachine" method="_on_mob_body__on_mob_body_state_change"]
+[connection signal="_on_Mob_Body_State_Change" from="EnemyControler/MobBody" to="EnemyControler/EnemyStateMachine" method="_on_mob_body__on_mob_body_state_change"]
