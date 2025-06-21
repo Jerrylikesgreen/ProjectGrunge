@@ -3,10 +3,12 @@ class_name EnemyStateMachine extends Node
 signal explore
 
 
-const MobBodyState = MobBody.MobBodyState
+enum EnemyState { IDLE, EXPLORING, PLAYER_TARGET }
+
+@export var state : EnemyState = EnemyState.IDLE : set = _set_state
+
 @onready var on_player_target_state: Node = $OnPlayerTargetState
 
-@export var mob_state: MobBodyState = MobBodyState.IDLE
 @export var target: MobBody
 
 
@@ -36,3 +38,9 @@ func _logic_on_idle() -> void:
 func _explore():
 	
 	pass 
+	
+func _set_state(new_state : EnemyState) -> void:
+	if new_state == state:
+		return                           
+
+	state = new_state
