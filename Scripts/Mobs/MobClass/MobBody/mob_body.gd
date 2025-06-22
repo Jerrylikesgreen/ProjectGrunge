@@ -12,10 +12,10 @@ const MOVE_EPS    := 0.5
 
 # --------------------------[Members]-------------------------------------- 
 @onready var sprite: AnimatedSprite2D = %AnimatedSprite
-
 enum MobBodyState { IDLE, MOVING, ACTION, ATTACKING }
 
 @export var state : MobBodyState = MobBodyState.IDLE : set = _set_state
+
 var _dir     : float = 0.0   ## horizontal input  (-1.0 / +1.0)
 var _jump_req: bool  = false ## edge-trigger
 var _moving  : bool  = false

@@ -8,15 +8,17 @@
 script = ExtResource("1_pcepn")
 
 [node name="PlayerTargetState" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_is2se")
 
 [node name="IdleState" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_2mpkc")
 metadata/_custom_type_script = "uid://cc2o2xph7i4bo"
 
 [node name="IdleTimer" type="Timer" parent="IdleState"]
 unique_name_in_owner = true
-wait_time = 5.0
 one_shot = true
 
+[connection signal="player_detected" from="IdleState" to="." method="_on_idle_state_player_detected"]
 [connection signal="timeout" from="IdleState/IdleTimer" to="." method="_on_idle_timer_timeout"]
