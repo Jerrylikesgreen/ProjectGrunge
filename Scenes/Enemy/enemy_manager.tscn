@@ -2,34 +2,24 @@
 
 [ext_resource type="Script" uid="uid://cikxeycp81x0f" path="res://Scripts/Mobs/Enemy/enemy_controler.gd" id="1_2t2r4"]
 [ext_resource type="Script" uid="uid://duryjo1boushy" path="res://Scripts/Mobs/Enemy/enemy_manager.gd" id="1_dmwl5"]
+[ext_resource type="Resource" uid="uid://eq86sgev3uc" path="res://Resources/enemy_resource.tres" id="2_uqn5h"]
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_d40jh"]
 [ext_resource type="PackedScene" uid="uid://dcy8ynj7s74le" path="res://Scenes/Enemy/enemy_state_machine.tscn" id="4_d40jh"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d40jh"]
-radius = 237.255
-
 [node name="EnemyManager" type="Node2D"]
 script = ExtResource("1_dmwl5")
+mob_resource = ExtResource("2_uqn5h")
+metadata/_edit_pinned_properties_ = [&"mob_resource"]
 
 [node name="EnemyStateMachine" parent="." instance=ExtResource("4_d40jh")]
-
-[node name="Label" type="Label" parent="EnemyStateMachine"]
-offset_right = 40.0
-offset_bottom = 23.0
+unique_name_in_owner = true
 
 [node name="EnemyControler" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_2t2r4")
 
 [node name="MobBody" parent="EnemyControler" instance=ExtResource("3_d40jh")]
 unique_name_in_owner = true
 
-[node name="Vision" type="Area2D" parent="."]
-unique_name_in_owner = true
-visible = false
-
-[node name="SearchRadius" type="CollisionShape2D" parent="Vision"]
-shape = SubResource("CircleShape2D_d40jh")
-
 [connection signal="explore" from="EnemyStateMachine" to="." method="_on_enemy_state_machine_explore"]
 [connection signal="mob_state_changed" from="EnemyControler/MobBody" to="." method="_on_mob_body_mob_state_changed"]
-[connection signal="body_shape_entered" from="Vision" to="." method="_on_area_2d_body_shape_entered"]

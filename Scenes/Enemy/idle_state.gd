@@ -24,7 +24,7 @@ func _logic_on_idle() -> void:
 		_start_idle_timer()
 		return
 
-	if target._is_player_controlled:
+	if target.is_in_group("player"):
 		emit_signal("player_detected")
 		print("Player Detected",target)
 	
