@@ -2,7 +2,7 @@ class_name MobBody extends CharacterBody2D
 
 #------------------------------------------[Signals]------------------------------------------------------------------
 signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
-
+signal arrived_at_target_pos
 
 
 #------------------------------------------[Variables]------------------------------------------------------------------------
@@ -26,13 +26,15 @@ var has_target   : bool = false
 
 enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
-
+@export var stop_radius := 60.0 
 @export var projectile: PackedScene
 @export var attack_wait_time: float = 0.5
 
 
 #-------------------------[Process]-----------------------------------------------------------------------------------------------------
 func _physics_process(delta: float) -> void:
+	if has_target:                 
+		_steer_toward_target()
 	_apply_input(delta)
 	_apply_gravity_jump(delta)
 	_update_state_machine()
@@ -123,19 +125,25 @@ func start_attack_timer() -> void:
 func _on_attack_timeout() -> void:
 	_set_state(MobBodyState.IDLE)
 
-func move_toward_point(point: Vector2) -> void:
+func move_toward_point(point: Vector2) -> void:## Needed for API Call. 
 	target_point = point
 	has_target   = true
 
+
 func _steer_toward_target() -> void:
 	var d: Vector2 = target_point - global_position
-	
-	if d.length() < ARRIVE_EPS:
-		has_target = false
+	var dist := d.length()
+
+	# ---------- ARRIVE RING ----------
+	if dist <= stop_radius:
+		has_target = false            # turn off chase
+		emit_signal("arrived_at_target_pos")
 		set_horizontal_input(0)
 		return
-		
+
+	# ---------- MOVE ----------
 	set_horizontal_input(signf(d.x))
-	
+
+	# Optional: jump when target is higher
 	if d.y < -JUMP_MIN_DY and is_on_floor():
 		request_jump()

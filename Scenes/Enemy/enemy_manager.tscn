@@ -22,3 +22,4 @@ script = ExtResource("1_2t2r4")
 unique_name_in_owner = true
 
 [connection signal="explore" from="EnemyStateMachine" to="." method="_on_enemy_state_machine_explore"]
+[connection signal="arrived_at_target_pos" from="EnemyControler/MobBody" to="." method="_on_mob_body_arrived_at_target_pos"]
