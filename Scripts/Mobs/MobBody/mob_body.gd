@@ -8,8 +8,6 @@ signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
 #------------------------------------------[Variables]------------------------------------------------------------------------
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite2D
-@onready var animation_player: AnimationPlayer = %AnimationPlayer
-@onready var sprite: Sprite2D = %Sprite2D
 
 const SPEED       := 200.0
 const JUMP_SPEED  := 400.0
@@ -26,7 +24,8 @@ enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
 
 @export var projectile: PackedScene
-@export var attack_wait_time: float = 0.5@export var projectile: PackedScene
+@export var attack_wait_time: float = 0.5
+
 
 
 #-------------------------[Process]-----------------------------------------------------------------------------------------------------
@@ -100,21 +99,6 @@ func attack() -> void:
 		projectile_instance.global_position = global_position
 		projectile_instance.direction = Vector2(-1 if sprite.flip_h else 1, 0)
 		get_tree().current_scene.add_child(projectile_instance)
-	elif mob_body_state == MobBodyState.ATTACKING:
-		print("Already attacking, cannot attack again.")
-	elif mob_body_state == MobBodyState.ACTION:
-		print("Cannot attack while performing an action.")
-	else:
-		print("Cannot attack in current state: ", mob_body_state)
-func attack() -> void:
-	if mob_body_state == MobBodyState.IDLE or mob_body_state == MobBodyState.MOVING:
-		_set_state(MobBodyState.ATTACKING)
-		#animation_player.play("Attack")
-		var projectile_instance = projectile.instantiate()
-		projectile_instance.global_position = global_position
-		projectile_instance.direction = Vector2(-1 if sprite.flip_h else 1, 0)
-		get_tree().current_scene.add_child(projectile_instance)
-		start_attack_timer()
 	elif mob_body_state == MobBodyState.ATTACKING:
 		print("Already attacking, cannot attack again.")
 	elif mob_body_state == MobBodyState.ACTION:

@@ -1,5 +1,5 @@
-class_name MobBody
 extends CharacterBody2D
+class_name MobBody
 
 # -----------------------[Signals]------------------------------------------- 
 signal mob_state_changed(new_state : MobBodyState)
