@@ -8,9 +8,11 @@
 script = ExtResource("1_pcepn")
 
 [node name="PlayerTargetState" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_is2se")
 
 [node name="IdleState" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_2mpkc")
 metadata/_custom_type_script = "uid://cc2o2xph7i4bo"
 

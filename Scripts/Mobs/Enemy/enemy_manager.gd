@@ -32,7 +32,7 @@ func _on_area_2d_body_shape_entered(
 		
 	if body.is_in_group("player"):
 		_current_target = body.global_position
-		enemy_state_machine.on_player_target(_current_target)
+		enemy_state_machine.target_pos = _current_target
 		return
 
 

@@ -22,7 +22,7 @@ func _logic_on_idle() -> void:
 		return
 
 	if target._is_player_controlled:
-		on_player_target_state
+		# on_player_target_state_function
 		print("Player Detected",target)
 	
 	else:## To:do - Replace boilor plate. 

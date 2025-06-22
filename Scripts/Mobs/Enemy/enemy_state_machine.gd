@@ -7,11 +7,11 @@ enum EnemyState { IDLE, EXPLORING, PLAYER_TARGET }
 
 @export var state : EnemyState = EnemyState.IDLE : set = _set_state
 
-@onready var on_player_target_state: Node = $OnPlayerTargetState
-@onready var idle_state: IdleState = $IdleState
+@onready var player_target_state: PlayerTargetState = %PlayerTargetState
+@onready var idle_state: IdleState = %IdleState
 
 @export var target: MobBody
-
+@export var target_pos: Vector2
 
 
 func _ready() -> void:
