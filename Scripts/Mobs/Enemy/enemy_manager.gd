@@ -57,6 +57,7 @@ func _on_target_lost(body: Node2D) -> void:
 
 func _set_state(new_state: EnemyState) -> void:
 	if new_state == current_state:
+
 		return
 	current_state = new_state
 	print("Enemy changed state to", new_state)

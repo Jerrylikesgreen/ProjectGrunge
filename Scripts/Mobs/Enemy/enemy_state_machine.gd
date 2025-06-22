@@ -11,7 +11,6 @@ enum EnemyState { IDLE, EXPLORING, CHASE }
 @onready var templabel: Label = %Label
 
 
-
 @export var target: MobBody
 
 

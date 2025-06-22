@@ -77,8 +77,8 @@ func _set_state(new_state : MobBodyState) -> void:
 
 func _apply_state_animation(s: MobBodyState) -> void:
 	match s:
-		MobBodyState.IDLE:   sprite.play("Idle")
-		MobBodyState.MOVING: sprite.play("Walking")
+		MobBodyState.IDLE:   animation_player.play("idle")
+		MobBodyState.MOVING: animation_player.play("walk")
 		#MobBodyState.ACTION: sprite.play("Jump")   ## or “Fall”		#todo: future work
 		#MobBodyState.ATTACKING: sprite.play("Attack")					#todo: future work
 

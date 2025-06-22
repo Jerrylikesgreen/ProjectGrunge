@@ -26,6 +26,7 @@ func _logic_on_idle() -> void:
 
 	if target.is_in_group("player"):
 		emit_signal("player_detected")
+
 		print("Player Detected",target)
 	
 	else:## To:do - Replace boilor plate. 

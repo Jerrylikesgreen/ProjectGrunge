@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnc7e8jjwsexv"]
+
+[ext_resource type="Texture2D" uid="uid://dgq820w3p15in" path="res://Assets/Bullet.png" id="1_31lnv"]
+[ext_resource type="Script" uid="uid://0mhig1djoncb" path="res://Scenes/Projectiles/base_projectile.gd" id="1_cirke"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cirke"]
+radius = 7.0
+height = 28.0
+
+[node name="BaseProjectile" type="Area2D" node_paths=PackedStringArray("sprite")]
+collision_layer = 16
+collision_mask = 10
+script = ExtResource("1_cirke")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_31lnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_cirke")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
