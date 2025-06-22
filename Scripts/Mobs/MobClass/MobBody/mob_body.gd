@@ -4,25 +4,30 @@ extends CharacterBody2D
 # -----------------------[Signals]------------------------------------------- 
 signal mob_state_changed(new_state : MobBodyState)
 
-
+const ARRIVE_EPS := 4.0          ## how close is “close enough”
+const JUMP_MIN_DY := 24.0        ## must be at least this high to jump
 const SPEED       := 200.0
 const JUMP_SPEED  := 400.0
 const GRAVITY     := 900.0
 const MOVE_EPS    := 0.5
 
 # --------------------------[Members]-------------------------------------- 
-@onready var animation_player: AnimationPlayer = %AnimationPlayer
-@onready var sprite: Sprite2D = %Sprite2D
-
+@onready var sprite: AnimatedSprite2D = %AnimatedSprite
 enum MobBodyState { IDLE, MOVING, ACTION, ATTACKING }
 
 @export var state : MobBodyState = MobBodyState.IDLE : set = _set_state
+
 var _dir     : float = 0.0   ## horizontal input  (-1.0 / +1.0)
 var _jump_req: bool  = false ## edge-trigger
 var _moving  : bool  = false
-
+var target_point : Vector2 = Vector2.ZERO
+var has_target   : bool = false
+const JUMP_CD_FRAMES := 15           # ~0.25 s at 60 fps
+var   _next_jump_frame := 0
 # -------------------[Main loop]--------------------------------------------- 
 func _physics_process(delta: float) -> void:
+	if has_target:
+		_steer_toward_target()
 	_apply_input(delta)
 	_apply_gravity_jump(delta)
 	move_and_slide()
@@ -78,10 +83,25 @@ func _apply_state_animation(s: MobBodyState) -> void:
 		#MobBodyState.ATTACKING: sprite.play("Attack")					#todo: future work
 
 
-func move_toward_point(target_pos: Vector2) -> void:
-	var dir_vec: Vector2 = target_pos - global_position
-	# Walk left/right toward the point
-	set_horizontal_input(signf(dir_vec.x))
-	#jump 
-	if dir_vec.y < -20.0 and is_on_floor():
+func move_toward_point(point: Vector2) -> void:
+	target_point = point
+	has_target   = true
+
+
+
+func _steer_toward_target() -> void:
+	var d: Vector2 = target_point - global_position
+	
+	if d.length() < ARRIVE_EPS:
+		has_target = false
+		set_horizontal_input(0)
+		return
+		
+	set_horizontal_input(signf(d.x))
+	
+	if d.y < -JUMP_MIN_DY \
+		and is_on_floor() \
+		and Engine.get_physics_frames() >= _next_jump_frame:
+			
 		request_jump()
+		_next_jump_frame = Engine.get_physics_frames() + JUMP_CD_FRAMES
