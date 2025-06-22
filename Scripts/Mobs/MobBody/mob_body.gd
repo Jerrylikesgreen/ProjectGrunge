@@ -24,14 +24,14 @@ enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
 
 @export var projectile: PackedScene
-
+@export var attack_wait_time: float = 0.5
 
 #-------------------------[Process]-----------------------------------------------------------------------------------------------------
 func _physics_process(delta: float) -> void:
 	_apply_input(delta)
 	_apply_gravity_jump(delta)
-	move_and_slide()
 	_update_state_machine()
+	move_and_slide()
 	
 #----------------------[Helpers]-------------------------------------------------------------------------------------------
 func set_horizontal_input(dir: float) -> void:
@@ -62,6 +62,8 @@ func _apply_gravity_jump(delta: float) -> void:
 func _update_state_machine() -> void:
 	var new_state := mob_body_state
 
+	if mob_body_state == MobBodyState.ATTACKING:
+		return  # do not change state while attacking
 	if not is_on_floor():
 		new_state = MobBodyState.ACTION
 	elif abs(velocity.x) > MOVE_EPS:
@@ -95,9 +97,24 @@ func attack() -> void:
 		projectile_instance.global_position = global_position
 		projectile_instance.direction = Vector2(-1 if sprite.flip_h else 1, 0)
 		get_tree().current_scene.add_child(projectile_instance)
+		start_attack_timer()
 	elif mob_body_state == MobBodyState.ATTACKING:
 		print("Already attacking, cannot attack again.")
 	elif mob_body_state == MobBodyState.ACTION:
 		print("Cannot attack while performing an action.")
 	else:
 		print("Cannot attack in current state: ", mob_body_state)
+
+func start_attack_timer() -> void:
+	var timer = Timer.new()
+	timer.wait_time = attack_wait_time
+	timer.one_shot = true
+	timer.timeout.connect(func():
+		_on_attack_timeout()
+		timer.queue_free()
+	)
+	add_child(timer)
+	timer.start()
+
+func _on_attack_timeout() -> void:
+	_set_state(MobBodyState.IDLE)
