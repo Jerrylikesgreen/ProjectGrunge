@@ -9,16 +9,20 @@ signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite2D
 
+const ARRIVE_EPS := 4.0     
+const JUMP_MIN_DY := 24.0
 const SPEED       := 200.0
 const JUMP_SPEED  := 400.0
 const GRAVITY     := 900.0
 const MOVE_EPS    := 0.5 
 
-var _dir : float = 0.0        ## horizontal input  (-1 … +1)
+var _dir : float = 0.0        ## horizontal input  (-1.0 , +1.0 )
 var _jump: bool  = false      ## edge-trigger flag
 var _is_moving := false
 var _is_player_controled: bool = false
 var was_state: MobBodyState = mob_body_state
+var target_point : Vector2 = Vector2.ZERO
+var has_target   : bool = false
 
 enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
@@ -118,3 +122,20 @@ func start_attack_timer() -> void:
 
 func _on_attack_timeout() -> void:
 	_set_state(MobBodyState.IDLE)
+
+func move_toward_point(point: Vector2) -> void:
+	target_point = point
+	has_target   = true
+
+func _steer_toward_target() -> void:
+	var d: Vector2 = target_point - global_position
+	
+	if d.length() < ARRIVE_EPS:
+		has_target = false
+		set_horizontal_input(0)
+		return
+		
+	set_horizontal_input(signf(d.x))
+	
+	if d.y < -JUMP_MIN_DY and is_on_floor():
+		request_jump()

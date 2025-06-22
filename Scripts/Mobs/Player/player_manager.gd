@@ -5,7 +5,6 @@ class_name PlayerManager extends MobManager
 var prior_states: Array[MobBody.MobBodyState] = []
 
 func _ready() -> void:
-	mob_body.mob_state_changed.connect(_on_mob_body_state_changed)
 	mob_body.add_to_group("player")
 
 func _on_mob_body_state_changed(new_state: MobBody.MobBodyState) -> void:
