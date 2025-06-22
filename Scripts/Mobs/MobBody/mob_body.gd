@@ -6,8 +6,8 @@ signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
 
 
 #------------------------------------------[Variables]------------------------------------------------------------------------
-@onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite
-
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
+@onready var sprite: Sprite2D = %Sprite2D
 
 const SPEED       := 200.0
 const JUMP_SPEED  := 400.0
@@ -23,6 +23,7 @@ var was_state: MobBodyState = mob_body_state
 enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
 
+@export var projectile: PackedScene
 
 
 #-------------------------[Process]-----------------------------------------------------------------------------------------------------
@@ -47,7 +48,7 @@ func request_jump() -> void:
 func _apply_input(delta: float) -> void:
 	if abs(_dir) > 0.01:
 		velocity.x = _dir * SPEED
-		animated_sprite.flip_h = _dir < 0.0
+		sprite.flip_h = _dir < 0.0
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, SPEED * 4 * delta)
 
@@ -80,9 +81,23 @@ func _set_state(new_state : MobBodyState) -> void:
 
 func _apply_state_animation(s: MobBodyState) -> void:
 	match s:
-		MobBodyState.IDLE:   animated_sprite.play("Idle")
-		MobBodyState.MOVING: animated_sprite.play("Walking")
-		#MobState.ACTION:    mob_animated_sprite.play("Jump")    # or "fall"
-		#MobState.ATTACKING: mob_animated_sprite.play("Attack")
+		MobBodyState.IDLE:   animation_player.play("idle")
+		MobBodyState.MOVING: animation_player.play("walk")
+		#MobState.ACTION:    mob_animation_player.play("Jump")    # or "fall"
+		#MobState.ATTACKING: mob_animation_player.play("Attack")
 		#Commented out for future implementation. 
 		
+func attack() -> void:
+	if mob_body_state == MobBodyState.IDLE or mob_body_state == MobBodyState.MOVING:
+		_set_state(MobBodyState.ATTACKING)
+		#animation_player.play("Attack")
+		var projectile_instance = projectile.instantiate()
+		projectile_instance.global_position = global_position
+		projectile_instance.direction = Vector2(-1 if sprite.flip_h else 1, 0)
+		get_tree().current_scene.add_child(projectile_instance)
+	elif mob_body_state == MobBodyState.ATTACKING:
+		print("Already attacking, cannot attack again.")
+	elif mob_body_state == MobBodyState.ACTION:
+		print("Cannot attack while performing an action.")
+	else:
+		print("Cannot attack in current state: ", mob_body_state)
