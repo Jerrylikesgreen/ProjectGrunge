@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcy8ynj7s74le"]
+
+[ext_resource type="Script" uid="uid://cc2o2xph7i4bo" path="res://Scripts/Mobs/Enemy/enemy_state_machine.gd" id="1_pcepn"]
+[ext_resource type="Script" uid="uid://dkpmhv7hss8j" path="res://Scenes/Enemy/on_player_target_state.gd" id="2_is2se"]
+[ext_resource type="Script" uid="uid://d3j4xowm6oav6" path="res://Scenes/Enemy/idle_state.gd" id="3_2mpkc"]
+
+[node name="EnemyStateMachine" type="Node"]
+script = ExtResource("1_pcepn")
+
+[node name="PlayerTargetState" type="Node" parent="."]
+script = ExtResource("2_is2se")
+
+[node name="IdleState" type="Node" parent="."]
+script = ExtResource("3_2mpkc")
+metadata/_custom_type_script = "uid://cc2o2xph7i4bo"
+
+[node name="IdleTimer" type="Timer" parent="IdleState"]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="IdleState/IdleTimer" to="." method="_on_idle_timer_timeout"]

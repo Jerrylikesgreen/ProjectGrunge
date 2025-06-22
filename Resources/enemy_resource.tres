@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://eq86sgev3uc"]
+
+[ext_resource type="Script" uid="uid://ccun7jvdoq67x" path="res://Scripts/Mobs/MobClass/MobManager/mob_resource_script.gd" id="1_mgpof"]
+[ext_resource type="Texture2D" uid="uid://ce1kcv2iry7qa" path="res://Assets/BaseBody-Sheet-Sheet.png" id="2_uabew"]
+
+[resource]
+script = ExtResource("1_mgpof")
+name = "Enemy*"
+sprite = ExtResource("2_uabew")
+metadata/_custom_type_script = "uid://ccun7jvdoq67x"

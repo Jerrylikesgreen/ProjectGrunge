@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://br57us8owllw5"]
+
+[ext_resource type="Script" uid="uid://ccun7jvdoq67x" path="res://Scripts/Mobs/MobClass/MobManager/mob_resource_script.gd" id="1_2kg01"]
+
+[resource]
+script = ExtResource("1_2kg01")
