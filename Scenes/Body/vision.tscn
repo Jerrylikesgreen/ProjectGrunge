@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bm1epqk8oageo"]
 
-[ext_resource type="Script" uid="uid://dfvm60x3v4sdc" path="res://Scenes/Body/vision.gd" id="1_syu48"]
+[ext_resource type="Script" uid="uid://dfvm60x3v4sdc" path="res://Scripts/Mobs/MobBody/vision.gd" id="1_syu48"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d40jh"]
-radius = 119.0
+radius = 191.01
 
 [node name="Vision" type="Area2D"]
 script = ExtResource("1_syu48")

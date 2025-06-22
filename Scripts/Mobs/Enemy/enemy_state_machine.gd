@@ -1,6 +1,8 @@
 class_name EnemyStateMachine extends Node
 
-signal explore
+signal explore                          # Manager → start wandering
+signal chase(target_pos: Vector2)       # Manager → chase this point
+signal lost_target                      # Manager → revert to idle
 
 
 enum EnemyState { IDLE, EXPLORING, CHASE }
@@ -14,10 +16,8 @@ enum EnemyState { IDLE, EXPLORING, CHASE }
 @export var target: MobBody
 
 
-func _ready() -> void:
-	idle_state._logic_on_idle()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	templabel.set_text(str(state))
 
 func _explore():
@@ -34,14 +34,11 @@ func _on_idle_timer_timeout() -> void:
 	_set_state(EnemyState.EXPLORING)
 	emit_signal("explore")
 
-
-func _on_idle_state_player_detected() -> void:
+func on_player_spotted(pos: Vector2) -> void:
 	_set_state(EnemyState.CHASE)
-	print("Chase State from Idle")
-	pass # Replace with function body.
-	
-func on_player_target():
-	_set_state(EnemyState.CHASE)
+	emit_signal("chase", pos)
 
-func on_target_lost():
+
+func on_target_lost() -> void:
 	_set_state(EnemyState.IDLE)
+	emit_signal("lost_target")

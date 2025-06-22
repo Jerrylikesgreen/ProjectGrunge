@@ -1,15 +1,19 @@
 class_name IdleState extends EnemyStateMachine
 
-signal player_detected
 
-@onready var idle_timer: Timer = %IdleTimer
+const IDLE_TIMER = preload("res://Scenes/Enemy/idle_timer.tscn")
+var idle_timer:Timer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	idle_timer = IDLE_TIMER.instantiate()
+	add_child(idle_timer)
+	_logic_on_idle
+	print(_logic_on_idle)
 	pass
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
