@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwbnq3w81t6u8"]
+[gd_scene load_steps=6 format=3 uid="uid://dwbnq3w81t6u8"]
 
 [ext_resource type="Script" uid="uid://qyvqtx2nffs1" path="res://Scripts/Mobs/Player/player_manager.gd" id="1_dd0ac"]
 [ext_resource type="Script" uid="uid://dr5n7if1d01bv" path="res://Scripts/Mobs/Player/player_controler.gd" id="1_mtuoh"]
 [ext_resource type="PackedScene" uid="uid://cvbrtnvudbdii" path="res://Scenes/Player/player_state_machine.tscn" id="2_mtuoh"]
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_xpcdj"]
+[ext_resource type="PackedScene" uid="uid://bnc7e8jjwsexv" path="res://Scenes/Projectiles/base_projectile.tscn" id="5_htcer"]
 
 [node name="PlayerManager" type="Node2D"]
 script = ExtResource("1_dd0ac")
@@ -15,5 +16,6 @@ script = ExtResource("1_mtuoh")
 
 [node name="MobBody" parent="." instance=ExtResource("3_xpcdj")]
 unique_name_in_owner = true
+projectile = ExtResource("5_htcer")
 
 [node name="Camera2D" type="Camera2D" parent="MobBody"]

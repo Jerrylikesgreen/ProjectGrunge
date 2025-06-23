@@ -97,13 +97,18 @@ func _apply_state_animation(s: MobBodyState) -> void:
 		#Commented out for future implementation. 
 		
 func attack() -> void:
-	if mob_body_state == MobBodyState.IDLE or mob_body_state == MobBodyState.MOVING:
+	if mob_body_state in [MobBodyState.IDLE, MobBodyState.MOVING]:
 		_set_state(MobBodyState.ATTACKING)
-		#animation_player.play("Attack")
-		var projectile_instance = projectile.instantiate()
-		projectile_instance.global_position = global_position
-		projectile_instance.direction = Vector2(-1 if sprite.flip_h else 1, 0)
-		get_tree().current_scene.add_child(projectile_instance)
+
+		var proj := projectile.instantiate()
+
+		var dir := -1 if sprite.flip_h else 1      # -1 left, +1 right
+		var offset := sprite.texture.get_size().x * 0.5 + 4   # 1/2 width + margin
+		proj.global_position = global_position + Vector2(dir * offset, 0)
+		proj.direction = Vector2(dir, 0)
+		get_tree().current_scene.add_child(proj)
+		start_attack_timer()
+		
 	elif mob_body_state == MobBodyState.ATTACKING:
 		print("Already attacking, cannot attack again.")
 	elif mob_body_state == MobBodyState.ACTION:
