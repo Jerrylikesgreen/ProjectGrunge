@@ -3,7 +3,7 @@ class_name MobBody extends CharacterBody2D
 #------------------------------------------[Signals]------------------------------------------------------------------
 signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
 signal arrived_at_target_pos
-
+signal mob_died
 
 #------------------------------------------[Variables]------------------------------------------------------------------------
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
@@ -29,6 +29,9 @@ enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var stop_radius := 60.0 
 @export var projectile: PackedScene
 @export var attack_wait_time: float = 0.5
+@export var health: int = 100
+
+var current_health: int = health
 
 
 #-------------------------[Process]-----------------------------------------------------------------------------------------------------
@@ -107,6 +110,12 @@ func attack() -> void:
 		var offset := sprite.texture.get_size().x * 0.5 + 4   # 1/2 width + margin
 		proj.global_position = global_position + Vector2(dir * offset, 0)
 		proj.direction = Vector2(dir, 0)
+		if self.is_in_group("Player"):
+			proj.collision_layer = 4
+			proj.collision_mask = 2
+		if self.is_in_group("Enemy"):
+			proj.collision_layer = 4
+			proj.collision_mask = 1
 		get_tree().current_scene.add_child(proj)
 		start_attack_timer()
 		
@@ -153,3 +162,12 @@ func _steer_toward_target() -> void:
 	# Optional: jump when target is higher
 	if d.y < -JUMP_MIN_DY and is_on_floor():
 		request_jump()
+
+func take_damage(amount: int) -> void:
+	current_health -= amount
+	if current_health <= 0:
+		die()
+
+func die() -> void:
+	print("%s died", self.name)
+	mob_died.emit()

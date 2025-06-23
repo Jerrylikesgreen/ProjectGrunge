@@ -6,16 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bnc7e8jjwsexv" path="res://Scenes/Projectiles/base_projectile.tscn" id="5_htcer"]
 
-[node name="PlayerManager" type="Node2D"]
+[node name="PlayerManager" type="Node2D" node_paths=PackedStringArray("body")]
 script = ExtResource("1_dd0ac")
+body = NodePath("MobBody")
 
 [node name="PlayerStateMachine" parent="." instance=ExtResource("2_mtuoh")]
 
 [node name="PlayerControler" type="Node2D" parent="."]
 script = ExtResource("1_mtuoh")
 
-[node name="MobBody" parent="." instance=ExtResource("3_xpcdj")]
+[node name="MobBody" parent="." groups=["Player"] instance=ExtResource("3_xpcdj")]
 unique_name_in_owner = true
+collision_layer = 1
 projectile = ExtResource("5_htcer")
 
 [node name="Camera2D" type="Camera2D" parent="MobBody"]
