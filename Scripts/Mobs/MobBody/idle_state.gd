@@ -1,4 +1,4 @@
-class_name IdleState extends Node  
+class_name IdleState extends EnemyStateMachine
 
 signal detected_target
 

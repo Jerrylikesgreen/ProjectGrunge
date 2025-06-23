@@ -24,6 +24,12 @@ unique_name_in_owner = true
 collision_layer = 2
 projectile = ExtResource("6_mg4cd")
 
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="attacking" from="EnemyStateMachine" to="." method="_on_enemy_state_machine_attacking"]
+[connection signal="chase" from="EnemyStateMachine" to="." method="_on_enemy_state_machine_chase"]
 [connection signal="explore" from="EnemyStateMachine" to="." method="_on_enemy_state_machine_explore"]
+[connection signal="_on_Mob_Body_State_Change" from="EnemyControler/MobBody" to="." method="_on_mob_body__on_mob_body_state_change"]
 [connection signal="arrived_at_target_pos" from="EnemyControler/MobBody" to="." method="_on_mob_body_arrived_at_target_pos"]

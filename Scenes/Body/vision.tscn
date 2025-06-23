@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dfvm60x3v4sdc" path="res://Scripts/Mobs/MobBody/vision.gd" id="1_syu48"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d40jh"]
-radius = 196.023
+radius = 303.2
 
 [node name="Vision" type="Area2D"]
 script = ExtResource("1_syu48")
