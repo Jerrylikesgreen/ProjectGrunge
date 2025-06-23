@@ -86,7 +86,7 @@
 
 ##  **Key Features**
 
-* **Empathy as a Resource:** Governs all—movement, interaction, dialogue, even power
+* **Emotions as a Resource:** Governs all—movement, interaction, dialogue, and even power
 
 * **2000s Grunge Rock Aesthetic** (Weezer, Green Day-inspired tone)
 
