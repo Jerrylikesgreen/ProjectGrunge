@@ -1,38 +1,30 @@
-class_name IdleState extends EnemyStateMachine
+class_name IdleState extends Node  
+
+signal detected_target
+
+const IDLE_TIMER_SCN := preload("res://Scenes/Enemy/idle_timer.tscn")
 
 
-const IDLE_TIMER = preload("res://Scenes/Enemy/idle_timer.tscn")
-var idle_timer:Timer
+var idle_timer: Timer
 
-# Called when the node enters the scene tree for the first time.
+# -----------------------------------[READY]------------------------------- 
 func _ready() -> void:
-	idle_timer = IDLE_TIMER.instantiate()
+	idle_timer = IDLE_TIMER_SCN.instantiate()
+	idle_timer.wait_time = 2.0  
+	idle_timer.one_shot  = true
+	idle_timer.timeout.connect(_on_idle_timer_timeout)
 	add_child(idle_timer)
-	_logic_on_idle
-	print(_logic_on_idle)
-	pass
+
+	_start_idle_timer()
 
 
-func _process(_delta: float) -> void:
-	pass
+func _start_idle_timer() -> void:
+	idle_timer.start()    
 
+func _on_idle_timer_timeout() -> void:
+	_logic_on_idle()
 
-func _start_idle_timer()->void:
-	idle_timer.start()
-	print("_start_idle_timer")
-	
-	
 func _logic_on_idle() -> void:
-	if target == null:
-		push_error(target,_start_idle_timer )
 		_start_idle_timer()
-		return
-
-	if target.is_in_group("player"):
-		emit_signal("player_detected")
-
-		print("Player Detected",target)
-	
-	else:## To:do - Replace boilor plate. 
-		_start_idle_timer()
-		print("_start_idle_timer", "2")
+		emit_signal("detected_target")
+		print("dsdsd")
