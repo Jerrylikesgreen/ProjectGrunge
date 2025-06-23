@@ -2,7 +2,7 @@ extends Area2D
 class_name BaseProjectile
 
 @export var speed: float = 400.0
-@export var damage: int = 1
+@export var damage: int = 10
 @export var lifetime: float = 3.0
 @export var sprite: Sprite2D
 
@@ -33,6 +33,5 @@ func _on_lifetime_timeout() -> void:
 	queue_free()
 
 func _on_body_entered(body:Node2D) -> void:
-	pass
-	# body.take_damage(damage)
-	# queue_free()
+	body.take_damage(damage)
+	queue_free()

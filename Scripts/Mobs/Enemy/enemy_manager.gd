@@ -15,6 +15,7 @@ var       enemy_vision   : Area2D            = null
 
 
 func _ready() -> void:
+	mob_body.connect("mob_died", on_mob_died)
 	mob_body.has_target    = false
 	mob_body.add_to_group("enemy")
 	mob_body.set_collision_layer(2)
@@ -94,3 +95,7 @@ func _on_enemy_state_machine_attacking() -> void:
 	mob_body.attack()
 	print("Attack")
 	pass # Replace with function body.
+
+func on_mob_died() -> void:
+	print("Enemy %s died", self.name)
+	queue_free()
