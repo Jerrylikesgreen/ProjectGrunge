@@ -6,6 +6,8 @@ var prior_states: Array[MobBody.MobBodyState] = []
 
 func _ready() -> void:
 	mob_body.add_to_group("player")
+	mob_body.set_collision_layer(1)
+	mob_body.set_collision_mask(30)
 
 func _on_mob_body_state_changed(new_state: MobBody.MobBodyState) -> void:
 	prior_states.push_back(new_state)

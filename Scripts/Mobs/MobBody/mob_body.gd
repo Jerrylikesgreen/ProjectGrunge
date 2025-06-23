@@ -97,6 +97,7 @@ func _apply_state_animation(s: MobBodyState) -> void:
 		#Commented out for future implementation. 
 		
 func attack() -> void:
+	print("Attacking")
 	if mob_body_state in [MobBodyState.IDLE, MobBodyState.MOVING]:
 		_set_state(MobBodyState.ATTACKING)
 
@@ -139,14 +140,14 @@ func _steer_toward_target() -> void:
 	var d: Vector2 = target_point - global_position
 	var dist := d.length()
 
-	# ---------- ARRIVE RING ----------
+	# ---------------------------------- [ARRIVE RING] -------------------------------------------------------------------
 	if dist <= stop_radius:
 		has_target = false            # turn off chase
 		emit_signal("arrived_at_target_pos")
 		set_horizontal_input(0)
 		return
 
-	# ---------- MOVE ----------
+	# ---------- ------------------------------------[MOVE] --------------------------------------------------------------
 	set_horizontal_input(signf(d.x))
 
 	# Optional: jump when target is higher

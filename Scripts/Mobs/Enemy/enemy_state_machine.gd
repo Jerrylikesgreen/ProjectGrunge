@@ -3,9 +3,9 @@ class_name EnemyStateMachine extends Node
 signal explore                          # Manager → start wandering
 signal chase(target_pos: Vector2)       # Manager → chase this point
 signal lost_target                      # Manager → revert to idle
+signal attacking()
 
-
-enum EnemyState { IDLE, EXPLORING, CHASE }
+enum EnemyState { IDLE, EXPLORING, CHASE, ATTACKING }
 @export var state : EnemyState = EnemyState.IDLE : set = _set_state
 @onready var chase_state: ChaseState = %ChaseState
 @onready var idle_state: IdleState = %IdleState
@@ -42,3 +42,8 @@ func on_player_spotted(pos: Vector2) -> void:
 func on_target_lost() -> void:
 	_set_state(EnemyState.IDLE)
 	emit_signal("lost_target")
+
+func _on_idle_state_detected_target() -> void:
+	emit_signal("attacking")
+	print("Baaab")
+	pass # Replace with function body.

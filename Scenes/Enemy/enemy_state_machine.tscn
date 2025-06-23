@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcy8ynj7s74le"]
+[gd_scene load_steps=5 format=3 uid="uid://dcy8ynj7s74le"]
 
 [ext_resource type="Script" uid="uid://cc2o2xph7i4bo" path="res://Scripts/Mobs/Enemy/enemy_state_machine.gd" id="1_pcepn"]
 [ext_resource type="Script" uid="uid://dkpmhv7hss8j" path="res://Scripts/Mobs/MobBody/on_player_target_state.gd" id="2_is2se"]
 [ext_resource type="Script" uid="uid://d3j4xowm6oav6" path="res://Scripts/Mobs/MobBody/idle_state.gd" id="3_2mpkc"]
+[ext_resource type="Script" uid="uid://410wwxe73ke2" path="res://Scripts/Mobs/Enemy/attacking_state.gd" id="4_y4ql8"]
 
 [node name="EnemyStateMachine" type="Node"]
 script = ExtResource("1_pcepn")
@@ -14,6 +15,11 @@ script = ExtResource("2_is2se")
 [node name="IdleState" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_2mpkc")
+metadata/_custom_type_script = "uid://cc2o2xph7i4bo"
+
+[node name="AttackingState" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_y4ql8")
 metadata/_custom_type_script = "uid://cc2o2xph7i4bo"
 
 [node name="Label" type="Label" parent="."]
@@ -30,3 +36,5 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+
+[connection signal="detected_target" from="IdleState" to="." method="_on_idle_state_detected_target"]

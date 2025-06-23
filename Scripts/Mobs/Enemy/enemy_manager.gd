@@ -16,6 +16,9 @@ var       enemy_vision   : Area2D            = null
 
 func _ready() -> void:
 	mob_body.has_target    = false
+	mob_body.add_to_group("enemy")
+	mob_body.set_collision_layer(2)
+	mob_body.set_collision_mask(29)
 	if !mob_body._is_player_controled:
 		_spawn_vision()
 		fsm.explore.connect(_on_explore)
@@ -86,6 +89,8 @@ func _on_mob_body_mob_state_changed(new_state: MobBody.MobBodyState) -> void:
 		  "  (history:", _state_history, ")")
 
 
-func _on_mob_body_arrived_at_target_pos() -> void:
-	_set_state(EnemyState.IDLE)
-	pass # I will set it to Idle for now untill attackjing is implemented. 
+func _on_enemy_state_machine_attacking() -> void:
+	_set_state(EnemyState.ATTACKING)
+	mob_body.attack()
+	print("Attack")
+	pass # Replace with function body.
