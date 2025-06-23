@@ -1,6 +1,6 @@
 class_name PlayerManager extends MobManager
 
-
+@export var emotions_component: Node2D
 @export var body: MobBody 
 var prior_states: Array[MobBody.MobBodyState] = []
 
