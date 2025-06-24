@@ -29,9 +29,9 @@ func _set_state(new_state : EnemyState) -> void:
 		return                           
 
 	state = new_state
-	if state == EnemyState.ATTACKING:
-		pass
-		attacking_state.run_attacking_logic
+	if state == EnemyState.IDLE:
+		idle_state._logic_on_idle()
+		
 
 
 func _on_idle_timer_timeout() -> void:

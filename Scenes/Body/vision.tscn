@@ -1,12 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm1epqk8oageo"]
+[gd_scene load_steps=2 format=3 uid="uid://bm1epqk8oageo"]
 
-[ext_resource type="Script" uid="uid://dfvm60x3v4sdc" path="res://Scripts/Mobs/MobBody/vision.gd" id="1_syu48"]
+[ext_resource type="Script" uid="uid://djlkpo0sa2ysk" path="res://Scenes/Body/vision.gd" id="1_pucr5"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d40jh"]
-radius = 303.2
+[node name="Vision" type="Node2D"]
+script = ExtResource("1_pucr5")
 
-[node name="Vision" type="Area2D"]
-script = ExtResource("1_syu48")
+[node name="VisionFront" type="Area2D" parent="."]
 
-[node name="SearchRadius" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_d40jh")
+[node name="SearchRadius" type="CollisionPolygon2D" parent="VisionFront"]
+position = Vector2(-1.02652, 0)
+scale = Vector2(0.995259, 1)
+polygon = PackedVector2Array(1, -3, 724, -364, 726, 427)
+
+[node name="VisionBack" type="Area2D" parent="VisionFront"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionFront/VisionBack"]
+position = Vector2(3.02563, 0)
+scale = Vector2(0.988144, 1)
+polygon = PackedVector2Array(-813.672, -379, -1, -5, -819.745, 306)
+
+[connection signal="body_entered" from="VisionFront" to="." method="_on_vision_front_body_entered"]
+[connection signal="body_exited" from="VisionFront" to="." method="_on_vision_front_body_exited"]
+[connection signal="body_entered" from="VisionFront/VisionBack" to="." method="_on_vision_back_body_entered"]
+[connection signal="body_exited" from="VisionFront/VisionBack" to="." method="_on_vision_back_body_exited"]

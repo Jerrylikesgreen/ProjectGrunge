@@ -26,7 +26,7 @@ var has_target   : bool = false
 
 enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
-@export var stop_radius := 120.0 
+@export var stop_radius := 200.0 
 @export var projectile: PackedScene
 @export var attack_wait_time: float = 0.5
 @export var health: int = 100
