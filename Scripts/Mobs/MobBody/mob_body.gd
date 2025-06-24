@@ -2,7 +2,7 @@ class_name MobBody extends CharacterBody2D
 
 #------------------------------------------[Signals]------------------------------------------------------------------
 signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
-signal arrived_at_target_pos
+signal arrived_at_target_pos(pos:Vector2)
 signal mob_died
 
 #------------------------------------------[Variables]------------------------------------------------------------------------
@@ -26,7 +26,7 @@ var has_target   : bool = false
 
 enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var mob_body_state: MobBodyState = MobBodyState.IDLE
-@export var stop_radius := 60.0 
+@export var stop_radius := 200.0 
 @export var projectile: PackedScene
 @export var attack_wait_time: float = 0.5
 @export var health: int = 100
@@ -152,7 +152,7 @@ func _steer_toward_target() -> void:
 	# ---------------------------------- [ARRIVE RING] -------------------------------------------------------------------
 	if dist <= stop_radius:
 		has_target = false            # turn off chase
-		emit_signal("arrived_at_target_pos")
+		emit_signal("arrived_at_target_pos", target_point)
 		set_horizontal_input(0)
 		return
 
