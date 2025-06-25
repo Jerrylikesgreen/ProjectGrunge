@@ -117,8 +117,6 @@ func _on_mob_body_arrived_at_target_pos(pos: Vector2) -> void:
 func _on_mob_body__on_mob_body_state_change(mob_body_state: MobBody.MobBodyState) -> void:
 	if mob_body_state == MobBody.MobBodyState.ATTACKING:
 		fsm._set_state(EnemyStateMachine.EnemyState.ATTACKING)
-		print("Meeh?")
-	pass # Replace with function body.
 
 func _flip_sprite(body)->void:
 
@@ -136,11 +134,8 @@ func _on_exit_back() -> void:
 
 func _on_attacking_state_keep_attacking() -> void:
 	mob_body.attack()
-	pass # Replace with function body.
 
 
 func _on_mob_body_mob_died() -> void:
 	var value = Globals.player_data.current_emotions_count
 	emit_signal("update_player_score", value)
-	print(value, "ayay")
-	pass # Replace with function body.

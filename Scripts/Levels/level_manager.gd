@@ -1,18 +1,20 @@
 class_name LevelManager extends Node2D
 
-@onready var player: PlayerManager = $"../Player"
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+@onready var effect_rect: ColorRect    = $BackgroundLayer/MonochromeEffect
+@onready var mat: ShaderMaterial       = effect_rect.material as ShaderMaterial
+@onready var player: PlayerManager = %Player
 
 
-func _on_enemy_update_player_score(value: int) -> void:
-	player.emotions_score.set_text(str(value))
-	print(value, "Plaplpldaspla")
-	pass # Replace with function body.
+
+func _on_enemy_update_player_score(current_emotion_count: int) -> void:
+	var comp := player.emotions_component
+	var ratio := 0.0
+	if comp.max_emotions > 0:
+		ratio = clamp(float(current_emotion_count) / comp.max_emotions, 0.0, 1.0)
+	mat.set_shader_parameter("colorize", ratio)
+	print(
+	"cur:", player.emotions_component.current_emotions,
+	"  max:", player.emotions_component.max_emotions
+)
+	player.emotions_score.set_text(str(current_emotion_count))
