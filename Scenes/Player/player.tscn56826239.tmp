@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cvbrtnvudbdii" path="res://Scenes/Player/player_state_machine.tscn" id="2_mtuoh"]
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bnc7e8jjwsexv" path="res://Scenes/Projectiles/base_projectile.tscn" id="5_htcer"]
-[ext_resource type="Script" uid="uid://c04nj3gc8ngw4" path="res://Scripts/Levels/emotions_score.gd" id="6_0u5uq"]
+[ext_resource type="Script" uid="uid://c04nj3gc8ngw4" path="res://Scenes/Player/emotions_score.gd" id="6_0u5uq"]
 [ext_resource type="PackedScene" uid="uid://ddjo8qnsl0r45" path="res://Scenes/Player/EmotionComponent/emotions_component.tscn" id="6_dd0ac"]
 
 [node name="PlayerManager" type="Node2D" node_paths=PackedStringArray("emotions_component", "body")]

@@ -176,7 +176,6 @@ func die() -> void:
 		pass ##Todo - Game over logic. 
 	else:
 		Globals.emotions_changed(emotions_count)
-		print(Globals.player_data.current_emotions_count)
 		emit_signal("mob_died")
 		get_parent().get_parent().queue_free()
 		
