@@ -1,6 +1,6 @@
 class_name EnemyManager extends MobManager                        
 
-signal update_player_score(value:int)
+signal update_player_score
 
 const VISION_SCN := preload("res://Scenes/Body/vision.tscn")
 
@@ -101,10 +101,7 @@ func _on_mob_body_mob_state_changed(new_state: MobBody.MobBodyState) -> void:
 
 
 
-func on_mob_died(emotions_count:int) -> void:
-	print("Enemy %s died", self.name)
-	Globals.emotions_changed(emotions_count)
-	print(str(Globals.player_data.current_emotions_count))
+func on_mob_died() -> void:
 	queue_free()
 
 
@@ -118,7 +115,7 @@ func _on_mob_body__on_mob_body_state_change(mob_body_state: MobBody.MobBodyState
 	if mob_body_state == MobBody.MobBodyState.ATTACKING:
 		fsm._set_state(EnemyStateMachine.EnemyState.ATTACKING)
 		print("Meeh?")
-	pass # Replace with function body.
+
 
 func _flip_sprite(body)->void:
 
@@ -136,11 +133,8 @@ func _on_exit_back() -> void:
 
 func _on_attacking_state_keep_attacking() -> void:
 	mob_body.attack()
-	pass # Replace with function body.
+
 
 
 func _on_mob_body_mob_died() -> void:
-	var value = Globals.player_data.current_emotions_count
-	emit_signal("update_player_score", value)
-	print(value, "ayay")
-	pass # Replace with function body.
+	emit_signal("update_player_score")

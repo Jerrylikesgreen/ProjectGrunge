@@ -10,3 +10,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	
 	pass
+
+
+func update_score()->void:
+	var value = Globals.player_data.current_emotions_count
+	var stringify_value = str(value)
+	set_text(stringify_value)
