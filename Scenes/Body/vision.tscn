@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bm1epqk8oageo"]
 
-[ext_resource type="Script" uid="uid://djlkpo0sa2ysk" path="res://Scenes/Body/vision.gd" id="1_pucr5"]
+[ext_resource type="Script" uid="uid://djlkpo0sa2ysk" path="res://Scripts/Mobs/MobBody/vision.gd" id="1_pucr5"]
 
 [node name="Vision" type="Node2D"]
 script = ExtResource("1_pucr5")

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var max_emotions: int = 10
+@export var max_emotions: int = 100
 
 var current_emotions: int :
 	get:
@@ -17,6 +17,8 @@ func _ready() -> void:
 
 func add_emotions(amount: int) -> void:
 	current_emotions = current_emotions + amount
-
+	Globals.emotions_changed(current_emotions)
+	
 func remove_emotions(amount: int) -> void:
 	current_emotions = current_emotions - amount
+	Globals.emotions_changed(current_emotions)

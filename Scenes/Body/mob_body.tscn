@@ -142,6 +142,7 @@ _data = {
 collision_layer = 0
 collision_mask = 28
 script = ExtResource("1_fqed2")
+health = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -158,3 +159,15 @@ autoplay = "idle"
 unique_name_in_owner = true
 texture = ExtResource("2_8iao1")
 hframes = 4
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.0
+offset_top = -31.0
+offset_right = 21.0
+offset_bottom = -8.0
+grow_horizontal = 2
+text = "Test"

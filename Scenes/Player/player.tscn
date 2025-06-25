@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwbnq3w81t6u8"]
+[gd_scene load_steps=8 format=3 uid="uid://dwbnq3w81t6u8"]
 
 [ext_resource type="Script" uid="uid://qyvqtx2nffs1" path="res://Scripts/Mobs/Player/player_manager.gd" id="1_dd0ac"]
 [ext_resource type="Script" uid="uid://dr5n7if1d01bv" path="res://Scripts/Mobs/Player/player_controler.gd" id="1_mtuoh"]
 [ext_resource type="PackedScene" uid="uid://cvbrtnvudbdii" path="res://Scenes/Player/player_state_machine.tscn" id="2_mtuoh"]
 [ext_resource type="PackedScene" uid="uid://c2c81ny1d67on" path="res://Scenes/Body/mob_body.tscn" id="3_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bnc7e8jjwsexv" path="res://Scenes/Projectiles/base_projectile.tscn" id="5_htcer"]
+[ext_resource type="Script" uid="uid://c04nj3gc8ngw4" path="res://Scenes/Player/emotions_score.gd" id="6_0u5uq"]
 [ext_resource type="PackedScene" uid="uid://ddjo8qnsl0r45" path="res://Scenes/Player/EmotionComponent/emotions_component.tscn" id="6_dd0ac"]
 
 [node name="PlayerManager" type="Node2D" node_paths=PackedStringArray("emotions_component", "body")]
@@ -23,5 +24,24 @@ collision_layer = 1
 projectile = ExtResource("5_htcer")
 
 [node name="Camera2D" type="Camera2D" parent="MobBody"]
+unique_name_in_owner = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="MobBody/Camera2D"]
+unique_name_in_owner = true
+
+[node name="EmotionsScore" type="Label" parent="MobBody/Camera2D/CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "0000"
+script = ExtResource("6_0u5uq")
+metadata/_edit_use_anchors_ = true
 
 [node name="EmotionsComponent" parent="." instance=ExtResource("6_dd0ac")]
+
+[connection signal="mob_died" from="MobBody" to="." method="_on_mob_body_mob_died"]

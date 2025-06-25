@@ -5,9 +5,11 @@ signal _on_Mob_Body_State_Change(mob_body_state:MobBodyState)
 signal arrived_at_target_pos(pos:Vector2)
 signal mob_died
 
+
 #------------------------------------------[Variables]------------------------------------------------------------------------
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite2D
+@onready var label: Label = %Label
 
 const ARRIVE_EPS := 4.0     
 const JUMP_MIN_DY := 24.0
@@ -30,7 +32,7 @@ enum MobBodyState { IDLE, ATTACKING, ACTION, MOVING }
 @export var projectile: PackedScene
 @export var attack_wait_time: float = 0.5
 @export var health: int = 100
-
+@export var emotions_count: int = 10
 var current_health: int = health
 
 
@@ -42,6 +44,7 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity_jump(delta)
 	_update_state_machine()
 	move_and_slide()
+	label.set_text(str(current_health))
 	
 #----------------------[Helpers]-------------------------------------------------------------------------------------------
 func set_horizontal_input(dir: float) -> void:
@@ -120,7 +123,7 @@ func attack() -> void:
 		start_attack_timer()
 		
 	elif mob_body_state == MobBodyState.ATTACKING:
-		print("Already attacking, cannot attack again.")
+		pass #print("Already attacking, cannot attack again.")
 	elif mob_body_state == MobBodyState.ACTION:
 		print("Cannot attack while performing an action.")
 	else:
@@ -169,5 +172,11 @@ func take_damage(amount: int) -> void:
 		die()
 
 func die() -> void:
-	print("%s died", self.name)
-	mob_died.emit()
+	if _is_player_controled:
+		pass ##Todo - Game over logic. 
+	else:
+		Globals.emotions_changed(emotions_count)
+		print(Globals.player_data.current_emotions_count)
+		emit_signal("mob_died")
+		get_parent().get_parent().queue_free()
+		

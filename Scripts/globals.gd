@@ -1,11 +1,18 @@
 extends Node
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+const PLAYER_DATA = preload("res://Resources/player_data.tres")
+var player_data: PlayerData = PLAYER_DATA.duplicate()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+@export_range(0, 9999) var max_emotions := 9999
+
+
+ 
+func emotions_changed(amount: int) -> void:
+	if amount <= 0:
+		return
+	player_data.current_emotions_count = clamp(
+		player_data.current_emotions_count + amount,
+		0,
+		max_emotions
+	)
