@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://doodo4w5bt1ey" path="res://icon.svg" id="1_b07c4"]
 [ext_resource type="Script" uid="uid://bvkhe81r4tckc" path="res://Scripts/Levels/level_manager.gd" id="1_db73o"]
+[ext_resource type="Shader" uid="uid://d2jn7fv37wsgx" path="res://Scenes/Levels/test_level.gdshader" id="1_npfmg"]
 [ext_resource type="PackedScene" uid="uid://dwbnq3w81t6u8" path="res://Scenes/Player/player.tscn" id="2_2ytpj"]
 [ext_resource type="Shader" uid="uid://lm4gaoef2rc2" path="res://Scenes/Levels/test_level.gdshader" id="2_npfmg"]
 [ext_resource type="PackedScene" uid="uid://cljuyn137pid2" path="res://Scenes/Enemy/enemy_manager.tscn" id="3_2ytpj"]
@@ -10,6 +11,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k8g1k"]
 shader = ExtResource("2_npfmg")
+shader_parameter/colorize = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k8g1k"]
+shader = ExtResource("1_npfmg")
 shader_parameter/colorize = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dtjkg"]
@@ -93,6 +98,21 @@ physics_layer_0/collision_mask = 23
 sources/0 = SubResource("TileSetAtlasSource_dtjkg")
 
 [node name="TestLevel" type="Node2D"]
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -5
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_k8g1k")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.333333, 0.333333, 0.333333, 1)
+script = ExtResource("2_k8g1k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background/ColorRect"]
 
 [node name="Level_Manager" type="Node2D" parent="."]
 script = ExtResource("1_db73o")

@@ -6,6 +6,10 @@ var prior_states: Array[MobBody.MobBodyState] = []
 
 @onready var emotions_score: Label = %EmotionsScore
 
+
+var current_emotions_count:int = 0
+var max_emotions_count:int= 100
+
 func _ready() -> void:
 	mob_body.add_to_group("player")
 	mob_body.set_collision_layer(1)
@@ -21,5 +25,6 @@ func _on_mob_body_state_changed(new_state: MobBody.MobBodyState) -> void:
 	print("Player entered state: ", new_state, "  (history: ", prior_states, ")")
 
 
-func _on_mob_body_mob_died() -> void:
-	emotions_score.set_text(str(Globals.player_data.current_emotions_count))
+func _on_enemy_update_player_score() -> void:
+	emotions_score.update_score()
+	print("Signal received from player")
