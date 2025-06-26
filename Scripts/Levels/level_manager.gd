@@ -1,30 +1,26 @@
 class_name LevelManager
 extends Node2D
 
-@onready var effect_rect: ColorRect    = $BackgroundLayer/MonochromeEffect
-@onready var mat: ShaderMaterial       = effect_rect.material as ShaderMaterial
-@onready var player: PlayerManager = %Player
+@onready var effect_rect: ColorRect = %effect_rect
+@onready var player      : PlayerManager = %Player
+var mat: ShaderMaterial
 
+func _ready() -> void:
+	# Give this rect its own copy so no one else overwrites it
+	effect_rect.material = effect_rect.material.duplicate()
+	mat = effect_rect.material as ShaderMaterial
 
-func _on_enemy_update_player_score(current_emotion_count: int) -> void:
-	var comp := player.emotions_component
+	# Initial sync
+	_apply_ratio(player.emotions_component.current_emotions)
+
+func _on_enemy_update_player_score(new_total: int) -> void:
+	_apply_ratio(new_total)
+	player.emotions_score.text = str(new_total)
+
+func _apply_ratio(cur: int) -> void:
+	var max_emotions = player.emotions_component.max_emotions
 	var ratio := 0.0
-	if comp.max_emotions > 0:
-		ratio = clamp(float(current_emotion_count) / comp.max_emotions, 0.0, 1.0)
-	mat.set_shader_parameter("colorize", ratio)
-	print(
-	"cur:", player.emotions_component.current_emotions,
-	"  max:", player.emotions_component.max_emotions
-)
-	player.emotions_score.set_text(str(current_emotion_count))
-
-func _process(_delta: float) -> void:
-	# protect against divide-by-zero just in case
-	var emotion_ratio := 0.0
-	if player.max_emotions_count > 0:
-		emotion_ratio = clamp(
-			float(player.current_emotions_count) / player.max_emotions_count,
-			0.0, 1.0
-		)
-	# 0 = colour, 1 = B&W → invert if you want colour to fade *out*
-	Globals.screen_desat = emotion_ratio
+	if max_emotions > 0:
+		ratio = clamp(float(cur) / max_emotions, 0.0, 1.0)
+	mat.set_shader_parameter("colorize", ratio)  
+	Globals.screen_desat = ratio                 

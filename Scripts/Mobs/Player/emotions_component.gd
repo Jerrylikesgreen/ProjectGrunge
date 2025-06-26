@@ -1,29 +1,24 @@
-class_name EmotionsComponent
 extends Node2D
 
 @export var max_emotions: int = 100
 
-var _current: int = 0
-
-@export var current_emotions: int = 0:
-	set(value):
-		_current = clamp(value, 0, max_emotions)
+var current_emotions: int :
 	get:
-		return _current
-
+		return current_emotions
+	set(value):
+		if value < 0:
+			value = 0
+		elif value > max_emotions:
+			value = max_emotions
+		current_emotions = value
 
 func _ready() -> void:
-	current_emotions = 0
-
+	current_emotions = max_emotions
 
 func add_emotions(amount: int) -> void:
-	if amount <= 0:
-		return
-	current_emotions += amount
-	Globals.emotions_changed(amount)
-
+	current_emotions = current_emotions + amount
+	Globals.emotions_changed(current_emotions)
+	
 func remove_emotions(amount: int) -> void:
-	if amount <= 0:
-		return
-	current_emotions -= amount
-	Globals.emotions_changed(-amount)
+	current_emotions = current_emotions - amount
+	Globals.emotions_changed(current_emotions)

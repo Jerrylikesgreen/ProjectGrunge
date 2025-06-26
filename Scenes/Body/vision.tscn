@@ -10,14 +10,14 @@ script = ExtResource("1_pucr5")
 [node name="SearchRadius" type="CollisionPolygon2D" parent="VisionFront"]
 position = Vector2(-1.02652, 0)
 scale = Vector2(0.995259, 1)
-polygon = PackedVector2Array(1, -3, 383.846, -193, 374.803, 196)
+polygon = PackedVector2Array(1, -3, 724, -364, 726, 427)
 
 [node name="VisionBack" type="Area2D" parent="VisionFront"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionFront/VisionBack"]
 position = Vector2(3.02563, 0)
 scale = Vector2(0.988144, 1)
-polygon = PackedVector2Array(-395.717, -187, -1, -5, -407.861, 155)
+polygon = PackedVector2Array(-813.672, -379, -1, -5, -819.745, 306)
 
 [connection signal="body_entered" from="VisionFront" to="." method="_on_vision_front_body_entered"]
 [connection signal="body_exited" from="VisionFront" to="." method="_on_vision_front_body_exited"]

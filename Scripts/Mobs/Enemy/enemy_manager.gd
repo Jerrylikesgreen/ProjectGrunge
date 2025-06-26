@@ -8,7 +8,7 @@ class_name EnemyManager extends MobManager
 ## 
 ## 
 ## This signal updates thge player emotions count on hud and also alerts nodes to update / process functions. 
-signal update_player_score
+signal update_player_score(value: int)
 
 ## Refrence to Vision Scene -> Needed to spwan Vision cones onto child of MobBody 
 const VISION_SCN := preload("res://Scenes/Body/vision.tscn")
@@ -177,4 +177,5 @@ func _on_attacking_state_keep_attacking() -> void:
 ## Sends emotions as XP for killing Mobs. Can be used for NPC use aswell when awrding Emotions to player. 
 func _on_mob_body_mob_died() -> void:
 	var value = Globals.player_data.current_emotions_count
+	
 	emit_signal("update_player_score", value)

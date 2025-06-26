@@ -25,6 +25,6 @@ func _on_mob_body_state_changed(new_state: MobBody.MobBodyState) -> void:
 	print("Player entered state: ", new_state, "  (history: ", prior_states, ")")
 
 
-func _on_enemy_update_player_score() -> void:
+func _on_enemy_update_player_score(_value:int) -> void:
 	emotions_score.update_score()
 	print("Signal received from player")
