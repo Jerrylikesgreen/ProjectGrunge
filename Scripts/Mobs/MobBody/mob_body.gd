@@ -52,6 +52,7 @@ var _is_moving: bool = false
 var _is_player_controlled: bool = false
 
 ## Last finite state-machine state before the current one
+
 var was_state: MobBodyState = mob_body_state
 
 ## Destination for autonomous movement
@@ -138,12 +139,17 @@ func _apply_input(delta: float) -> void:
 
 ## Handles jump requests and applies gravity every physics tick.
 func _apply_gravity_jump(delta: float) -> void:
-	if _jump and is_on_floor():
-		velocity.y = -JUMP_SPEED              ## launch!
-	_jump = false                             ## edge-trigger resets
 
-	if not is_on_floor():                     ## falling / rising
-		velocity.y += GRAVITY * delta         ## apply gravity
+	if _jump and _jump_count < MAX_JUMP_COUNT:
+		velocity.y = -JUMP_SPEED
+		_jump_count += 1
+		_jump = false                     
+
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+	else:
+		_jump_count = 0
+		_jump = false
 
 
 # ──────────────────────────────[ FSM helpers ]────────────────────────────────
