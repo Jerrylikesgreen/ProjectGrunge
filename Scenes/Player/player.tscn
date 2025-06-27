@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwbnq3w81t6u8"]
+[gd_scene load_steps=13 format=3 uid="uid://dwbnq3w81t6u8"]
 
 [ext_resource type="Script" uid="uid://qyvqtx2nffs1" path="res://Scripts/Mobs/Player/player_manager.gd" id="1_dd0ac"]
 [ext_resource type="Script" uid="uid://dr5n7if1d01bv" path="res://Scripts/Mobs/Player/player_controler.gd" id="1_mtuoh"]
@@ -7,6 +7,23 @@
 [ext_resource type="PackedScene" uid="uid://bnc7e8jjwsexv" path="res://Scenes/Projectiles/base_projectile.tscn" id="5_htcer"]
 [ext_resource type="Script" uid="uid://c04nj3gc8ngw4" path="res://Scripts/Levels/emotions_score.gd" id="6_0u5uq"]
 [ext_resource type="PackedScene" uid="uid://ddjo8qnsl0r45" path="res://Scenes/Player/EmotionComponent/emotions_component.tscn" id="6_dd0ac"]
+[ext_resource type="Shader" uid="uid://d2jn7fv37wsgx" path="res://Resources/test_level.gdshader" id="7_gk6dx"]
+[ext_resource type="Script" uid="uid://8u16fp3cghtt" path="res://Scenes/Levels/point_light_2d.gd" id="8_jhyir"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_74mp2"]
+shader = ExtResource("7_gk6dx")
+shader_parameter/colorize = 0.414
+
+[sub_resource type="Gradient" id="Gradient_hyk2w"]
+offsets = PackedFloat32Array(0.0268097, 0.47185, 0.742627)
+colors = PackedColorArray(1, 1, 1, 1, 0.418733, 0.418733, 0.418733, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oikmp"]
+gradient = SubResource("Gradient_hyk2w")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.508547, 0.452991)
+fill_to = Vector2(0, 0.0042735)
 
 [node name="PlayerManager" type="Node2D" node_paths=PackedStringArray("emotions_component", "body")]
 script = ExtResource("1_dd0ac")
@@ -41,6 +58,17 @@ grow_horizontal = 2
 text = "0000"
 script = ExtResource("6_0u5uq")
 metadata/_edit_use_anchors_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="MobBody"]
+material = SubResource("ShaderMaterial_74mp2")
+position = Vector2(0, 2)
+scale = Vector2(10, 10)
+color = Color(0.139808, 0.247475, 0.565858, 0.65098)
+energy = 1.31
+shadow_color = Color(0, 0, 0, 0.803922)
+texture = SubResource("GradientTexture2D_oikmp")
+height = 86.0
+script = ExtResource("8_jhyir")
 
 [node name="EmotionsComponent" parent="." instance=ExtResource("6_dd0ac")]
 

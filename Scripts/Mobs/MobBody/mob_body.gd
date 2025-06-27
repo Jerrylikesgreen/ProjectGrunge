@@ -17,7 +17,8 @@ const SPEED       := 200.0
 const JUMP_SPEED  := 400.0
 const GRAVITY     := 900.0
 const MOVE_EPS    := 0.5 
-
+const MAX_JUMP_COUNT  := 1
+var _jump_count   := 0
 var _dir : float = 0.0        ## horizontal input  (-1.0 , +1.0 )
 var _jump: bool  = false      ## edge-trigger flag
 var _is_moving := false
@@ -66,11 +67,16 @@ func _apply_input(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, SPEED * 4 * delta)
 
 func _apply_gravity_jump(delta: float) -> void:
-	if _jump and is_on_floor():
+	if _jump and _jump_count < MAX_JUMP_COUNT:
 		velocity.y = -JUMP_SPEED
-	_jump = false
+		_jump_count += 1
+		_jump = false                     
+
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
+	else:
+		_jump_count = 0
+		_jump = false
 
 func _update_state_machine() -> void:
 	var new_state := mob_body_state
