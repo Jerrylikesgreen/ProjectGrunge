@@ -55,7 +55,7 @@ func _ready() -> void:
 	mob_body.set_collision_layer(2)
 	mob_body.set_collision_mask(29)
 	mob_body.current_health = 30
-	if !mob_body._is_player_controled:
+	if !mob_body._is_player_controlled:
 		_spawn_vision()
 		fsm.explore.connect(_on_explore)
 		fsm.chase  .connect(_on_chase)
@@ -164,7 +164,7 @@ func _flip_sprite(body)->void:
 	
 	mob_body._steer_toward_target()
 
-#When player leave backl vision sets state to idle. 
+## When player leave backl vision sets state to idle. 
 func _on_exit_back() -> void:
 	fsm._set_state(EnemyStateMachine.EnemyState.IDLE)
 
